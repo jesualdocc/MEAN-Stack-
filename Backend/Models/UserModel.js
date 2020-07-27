@@ -1,24 +1,37 @@
 var mongoose = require('mongoose');
 
-
-
 var userModelSchema = new mongoose.Schema(
     {
-        first_name:{
+        firstName:{
             type:String,
             required:true
         },
-        last_name:{
+        lastName:{
             type:String,
             required:true
+        },
+        userName:{
+            type:String,
+            required:true,
+            unique:true,
+            minlength:5
         },
         email:{
             type:String,
-            required:true
+            required:true,
+            unique:true
         },
-        Role:{
+        phoneNumber:{
+            type:Number
+        },
+        role:{
             type:String,
             required:true
+        },
+        password:{
+            type:String,
+            required:true,
+            minlength:6
         },
 
         enrollmentDate:{
@@ -26,9 +39,9 @@ var userModelSchema = new mongoose.Schema(
             default:Date.now
         }
 
-
-    }
-    
+    }  
 );
 
+
 module.exports = mongoose.model('Users', userModelSchema);
+
