@@ -1,6 +1,6 @@
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -12,7 +12,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DemoMaterialModule } from './demo-material-module';
 
 import { SharedModule } from './shared/shared.module';
@@ -21,7 +21,9 @@ import { LoginComponent } from './login/login.component';
 import { UsersComponent } from './users/users.component';
 import { DonationsComponent } from './donations/donations.component';
 import { EventsComponent } from './events/events.component';
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatTableModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatTableModule, MatExpansionModule } from '@angular/material';
+import { CdkDetailRowDirective } from './users/cdk-detail-row.directive';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,7 @@ import { MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, Mat
     AppHeaderComponent,
     SpinnerComponent,
     AppSidebarComponent,
+    CdkDetailRowDirective,
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,10 @@ import { MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, Mat
     MatToolbarModule,
     ReactiveFormsModule,
     MatTableModule,
-    RouterModule.forRoot(AppRoutes)
+    MatExpansionModule,
+    NoopAnimationsModule,
+    RouterModule.forRoot(AppRoutes),
+    NgbModule
   ],
   providers: [
     {

@@ -13,4 +13,6 @@ router.post('/NewUser', controller.postData);
 
 router.put('/:id', controller.update);
 
+router.delete('/:id', controller.deleteOne);
+
 module.exports = router;

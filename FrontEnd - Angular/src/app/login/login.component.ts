@@ -1,3 +1,4 @@
+import { baseUrl, baseUrlAngular } from './../../environments/environment';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -40,7 +41,8 @@ export class LoginComponent implements OnInit {
           
           const token = result.token;
           
-          this.router.navigateByUrl('/dashboard');
+          this.router.navigate(['/dashboard']);
+          
         }
         else{
           console.log("No Sucess"); 

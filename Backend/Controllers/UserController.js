@@ -44,15 +44,27 @@ exports.postData = async function (req, res, next){
 };
 
 exports.deleteOne = function(req, res, next){
-  userModel.remove({_id:req.params.id}, (err, data)=>{
-    if(err){
-      res.err(err);
-    }
-    else{
-      res.json(data);
-    }
-  })
+  try {
+    userModel.remove({_id:req.params.id}, (err, data)=>{
+      if(err){
+        var tmp = {err};
+        tmp = {errorMsg:tmp.err.message, ok:0, n:0} ;
+        console.log('Erro' + tmp);
+        res.send(tmp);
+      }
+      else{
+        console.log('Good' + data);
+        res.json(data);
+      }
+   
+    });
+   
+} catch (err) {
+    res.send(err);
+ }
 }
+ 
+    
 
 exports.deleteAll = function (req, res, next){
 

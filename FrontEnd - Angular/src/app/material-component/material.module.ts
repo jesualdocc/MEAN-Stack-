@@ -3,7 +3,7 @@ import { EventsComponent } from './../events/events.component';
 import { LoginComponent } from './../login/login.component';
 import { UsersComponent } from './../users/users.component';
 import 'hammerjs';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -35,6 +35,7 @@ import { TooltipComponent } from './tooltip/tooltip.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { SliderComponent } from './slider/slider.component';
 import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
+import { MatExpansionModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatTableModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { SlideToggleComponent } from './slide-toggle/slide-toggle.component';
     UsersComponent,
     LoginComponent,
     EventsComponent,
-    DonationsComponent
+    DonationsComponent,
+
   ]
 })
 export class MaterialComponentsModule {}
