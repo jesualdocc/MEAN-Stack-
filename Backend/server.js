@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const verifyToken = require('./tokenvalidation');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -23,9 +24,11 @@ db.on('error', (err)=>{
  
  const usersRoute = require('./Routes/UsersRoute');
  const donationsRoute = require('./Routes/DonationsRoute');
+ const loginRoute = require('./Routes/LoginRoute');
 
  app.use('/Users', usersRoute);
- app.use('/Donations', donationsRoute);
+ app.use('/Donations', verifyToken, donationsRoute);
+ app.use('/Login', loginRoute);
 
 //Listen to Server
 const port = 3000;

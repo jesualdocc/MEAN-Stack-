@@ -1,0 +1,51 @@
+import { Router } from '@angular/router';
+import { LoginService } from './login.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+
+export var userName:string;
+export var userRole:string;
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+
+export class LoginComponent implements OnInit {
+  formGroup:FormGroup | undefined;
+  
+  constructor(private loginService:LoginService, private router:Router) { }
+
+  ngOnInit(): void {
+    this.initForm();
+  }
+  
+  initForm(){
+    this.formGroup = new FormGroup({
+      userName: new FormControl("", [Validators.required]),
+      password: new FormControl("", [Validators.required])
+    })
+  }
+
+  loginProcess(){
+    if(this.formGroup?.valid){
+      this.loginService.loginHandler(this.formGroup.value).subscribe(result=>{
+
+       console.log(result);
+
+        if(result.isValid){
+          userName= result.userName;
+          userRole = result.role;
+          
+          const token = result.token;
+          
+          this.router.navigateByUrl('/dashboard');
+        }
+        else{
+          console.log("No Sucess"); 
+        }
+      });
+    }
+  }
+}

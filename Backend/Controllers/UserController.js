@@ -1,4 +1,5 @@
 var userModel = require('../Models/UserModel');
+const bcrypt = require('bcryptjs');
 
 exports.getAll = function (req, res, next){
 
@@ -15,8 +16,13 @@ exports.getById = function (req, res, next){
     });
 };
 
-exports.postData = function (req, res, next){
+exports.postData = async function (req, res, next){
 
+  try{
+    //Hash Password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+ 
   let newUser = userModel({
     firstName:req.body.firstName,
     lastName:req.body.lastName,
@@ -24,17 +30,16 @@ exports.postData = function (req, res, next){
     email:req.body.email,
     phoneNumber:req.body.phoneNumber,
     role:req.body.role,
-    password:req.body.password
+    password:hashedPassword
   });
-  
-  newUser.save((err, someData)=>{
-    if(err){
-      res.json({msg:'Operation Failed', ErrorMessage:err})
-    }
-    else{
-      res.json({msg:'successful post'})
-    }
-  })
+
+    await newUser.save();
+    res.json({msg:'successful post'});
+  }
+  catch(err){
+    console.log(err);
+    res.status(400).send(err);
+  }
   
 };
 

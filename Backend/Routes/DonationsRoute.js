@@ -13,4 +13,8 @@ router.post('/NewDonation', controller.postData);
 
 router.put('/:id', controller.update);
 
+router.delete('/:id', controller.deleteOne);
+
+router.delete('/DeleteAll', controller.deleteAll);
+
 module.exports = router;
