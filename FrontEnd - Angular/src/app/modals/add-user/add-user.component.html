@@ -1,5 +1,5 @@
-
 <div class="modal-header">
+  <h3>New User</h3>
   <button type="button" class="close" aria-label="Close" mat-dialog-close>
     <span aria-hidden="true">&times;</span>
   </button>
@@ -7,8 +7,7 @@
 
 <div class="container">
     <div [hidden]="submitted">
-      <h1>New User</h1>
-
+      
       <form (ngSubmit)="onSubmit()" #userForm="ngForm">
         
         <div class="form-group">
@@ -112,11 +111,12 @@
           </div>
 
         </div>
-  
+        <br>
         <button type="submit" class="btn btn-success"  [disabled]="!userForm.form.valid">Submit</button>
-        <button type="button" class="btn btn-default" (click)="clearForm(); userForm.reset()">Clear</button>
+        <span style="margin-left: 4em;"></span>
+        <button type="button" mat-raised-button color="basic" class="btn btn-default" (click)="clearForm(); userForm.reset()">Clear</button>
 
-        <div *ngIf = "!submitted" class="alert alert-danger">
+        <div *ngIf = "errorMessage" class="alert alert-danger">
           {{submissionMessage}}
         </div>
     </form>

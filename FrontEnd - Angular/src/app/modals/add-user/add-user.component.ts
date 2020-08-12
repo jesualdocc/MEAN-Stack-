@@ -18,6 +18,7 @@ export class AddUserComponent implements OnInit {
   submissionMessage = '';
   emailList:string[] = [];
   usernameList:string[] = [];
+  errorMessage = false;
   
   get checkUsername():string { 
     const uName = this.model.userName;
@@ -38,7 +39,6 @@ export class AddUserComponent implements OnInit {
 
   onSubmit(){
     
-    this.model.password = "abc12345";
     this.sendData();
     
   }
@@ -57,6 +57,7 @@ export class AddUserComponent implements OnInit {
   sendData(){
     this.userService.addUser(this.model).subscribe(result=>{
     if(result.ok == 1){
+      this.errorMessage = false;
       this.submitted = true;
       this.submissionMessage = '';
       alert("User Added");
@@ -65,6 +66,7 @@ export class AddUserComponent implements OnInit {
     }
     else{
       
+      this.errorMessage = true;
       if(this.emailList.includes(this.model.email)){
         this.submissionMessage = "Email is already Registered";
       }

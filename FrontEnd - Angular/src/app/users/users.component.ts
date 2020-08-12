@@ -1,3 +1,4 @@
+import { EditUserComponent } from './../modals/edit-user/edit-user.component';
 import { AddUserComponent } from './../modals/add-user/add-user.component';
 import { baseUrl } from './../../environments/environment';
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
@@ -56,31 +57,18 @@ export class UsersComponent implements OnInit {
     // The user can't close the dialog by clicking outside its body
     dialogConfig.disableClose = true;
     dialogConfig.id = "modal-component";
-    dialogConfig.height = "500px";
-    dialogConfig.width = "400px";
+    dialogConfig.height = "700px";
+    dialogConfig.width = "550px";
     // https://material.angular.io/components/dialog/overview
     const modalDialog = this.matDialog.open(AddUserComponent, dialogConfig);
   }
 
-  openAddModal(){
-    if(this.formGroupAdd?.valid){
-      this.userService.addUser(this.formGroupAdd.value).subscribe(result=>{
-        
-       
-      })
-
-    }else{
-
-    }
-
-  }
 
   openFirstModalbyId(row:any){
-    
     const modalRef = this.modalService.open(Main_Modal, {
       backdrop : 'static',
       keyboard : false, 
-      size:'sm'
+      size:'md'
 });
     modalRef.componentInstance.rowID = row._id;
   }
@@ -89,7 +77,6 @@ export class UsersComponent implements OnInit {
     this.userService.getAllUsers().subscribe(data=>{
      
       this.dataSource = new MatTableDataSource();
-      
       this.dataSource.data = data;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -105,16 +92,32 @@ export class UsersComponent implements OnInit {
 export class Main_Modal {
   @Input() rowID:any;
   
-  constructor(private modalService: NgbModal, public activeModal: NgbActiveModal) {}
+  constructor(private modalService: NgbModal, public activeModal: NgbActiveModal,
+    public matDialog: MatDialog) {}
 
-  edit() {
-    const modalRef = this.modalService.open(Edit_Modal, {
+  edit(){
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    dialogConfig.height = "700px";
+    dialogConfig.width = "550px";
+    dialogConfig.data = {id:this.rowID};
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(EditUserComponent, dialogConfig);
+    
+
+  }
+
+  resetPassword(){
+    const modalRef = this.modalService.open(Confirmation_Modal, {
       backdrop : 'static',
       keyboard : false, 
-      size:'sm'
+      size:'md'
 });
-
     modalRef.componentInstance.rowID = this.rowID;
+    modalRef.componentInstance.confirmationType = "Reset";
+
   }
 
   delete() {
@@ -126,14 +129,6 @@ export class Main_Modal {
     modalRef.componentInstance.rowID = this.rowID;
     modalRef.componentInstance.confirmationType = "Delete";
   }
-}
-
-@Component({
-  templateUrl: './modals/editmodal.html',
-  styleUrls: ['./users.component.css'],
-})
-export class Edit_Modal {
-  constructor(public activeModal: NgbActiveModal) {}
 }
 
 
@@ -171,21 +166,16 @@ export class Confirmation_Modal {
       });
     }
 
-    if(this.confirmationType == "Add"){
+    if(this.confirmationType == "Reset"){
+      var model = new Users();
+      model.password = "abc1234";
+      this.userService.changePassword(this.rowID, model).subscribe(data=>{
+        this.refresh();
+      })
 
     }
 
-    if(this.confirmationType == "Edit"){
-
-    }
   }
   
 }
 
-// @Component({
-//   styleUrls: ['./users.component.css'],
-// })
-// export class AddUser_Modal {
-//   constructor(public activeModal: NgbActiveModal) {}
-
-// }

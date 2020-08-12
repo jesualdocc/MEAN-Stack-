@@ -44,4 +44,13 @@ export class UsersService {
     headers.append('Content-Type', 'application/json');
     return this.http.delete(url, {responseType: 'json'});
   }
+
+  changePassword(id:string, data:any):Observable<any>{
+    var url = baseUrl + '/Users/ChangePassword/'+ id;
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put(url, data, {responseType: 'json'});
+  }
+
+  
 }

@@ -21,7 +21,7 @@ exports.postData = async function (req, res, next){
   try{
     //Hash Password
   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  const hashedPassword = await bcrypt.hash("abc1234", salt);
  
   let newUser = userModel({
     firstName:req.body.firstName,
@@ -71,7 +71,9 @@ exports.deleteAll = function (req, res, next){
 
   userModel.remove(function(err, data){
     if(err){
-      res.json(err);
+      msg = err['errmsg'];
+      retStr = {msg, ok:0};
+      res.send(retStr);
     }
     else{
       res.json({msg:"Success"});
@@ -90,17 +92,44 @@ userModel.findByIdAndUpdate({_id:req.params.id},{
   userName:req.body.userName,
   email:req.body.email,
   phoneNumber:req.body.phoneNumber,
-  role:req.body.role,
-  password:req.body.password
+  role:req.body.role
 }, (err, data)=>{
 
   if(err){
     res.json(err);
   }
   else{
-    res.json({msg:"Success"});
+    res.json({msg:'successful post', ok:1});
   }
 
 });
 
+}
+
+exports.changePassword = async function(req, res, next){
+  // Validate Request (todo)
+  var hashedPassword;
+
+  try{
+    //Hash Password
+  const salt = await bcrypt.genSalt(10);
+  hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+  }catch(err){
+
+  }
+  
+    userModel.findByIdAndUpdate({_id:req.params.id},{
+        password:hashedPassword
+      }, 
+      (err, data)=>{
+
+        if(err){
+          res.json(err);
+        }
+        else{
+          res.json({msg:'successful post', ok:1});
+        }
+      
+      });
 }
