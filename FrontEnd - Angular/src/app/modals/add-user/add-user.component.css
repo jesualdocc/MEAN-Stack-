@@ -1,0 +1,9 @@
+input{
+    background-color: rgb(204, 207, 207);
+    ;
+}
+
+.small-btn {
+    width: 30px;
+    height: 30px;
+}

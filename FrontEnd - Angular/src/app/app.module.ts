@@ -24,6 +24,9 @@ import { EventsComponent } from './events/events.component';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatCardModule, MatToolbarModule, MatTableModule, MatExpansionModule } from '@angular/material';
 import { CdkDetailRowDirective } from './users/cdk-detail-row.directive';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModalComponent } from './components/modal/modal.component';
+import { EditUserComponent } from './modals/edit-user/edit-user.component';
+import { AddUserComponent } from './modals/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +36,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     SpinnerComponent,
     AppSidebarComponent,
     CdkDetailRowDirective,
+    ModalComponent,
+    EditUserComponent,
+    AddUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +66,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       useClass: PathLocationStrategy
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalComponent]
 })
 export class AppModule {}

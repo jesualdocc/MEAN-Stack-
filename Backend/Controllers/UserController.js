@@ -34,11 +34,12 @@ exports.postData = async function (req, res, next){
   });
 
     await newUser.save();
-    res.json({msg:'successful post'});
+    res.json({msg:'successful post', ok:1});
   }
   catch(err){
-    console.log(err);
-    res.status(400).send(err);
+    msg = err['errmsg'];
+    retStr = {msg, ok:0};
+    res.send(retStr);
   }
   
 };

@@ -1,0 +1,125 @@
+
+<div class="modal-header">
+  <button type="button" class="close" aria-label="Close" mat-dialog-close>
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="container">
+    <div [hidden]="submitted">
+      <h1>New User</h1>
+
+      <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+        
+        <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName"
+                 required
+                 [(ngModel)]="model.firstName" name="firstName"
+                 #fname="ngModel"/>
+         
+          <div *ngIf="fname.invalid && (fname.dirty || fname.touched)"
+                 class="alert alert-danger">
+                 
+                
+                <div *ngIf="fname.errors.required">
+                  First Name is required.
+                </div>
+         
+          </div>
+
+        </div>
+  
+        <div class="form-group">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastName"
+          required
+          [(ngModel)]="model.lastName" name="lastName" #lname="ngModel">
+          
+          <div *ngIf="lname.invalid && (lname.dirty || lname.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="lname.errors.required">
+                  Last Name is required.
+                </div>
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="userName">Username</label>
+          <input type="text" class="form-control" id="userName"
+          required
+          [(ngModel)]="model.userName" name="userName" #uname="ngModel">
+          
+          <div *ngIf="uname.invalid && (uname.dirty || uname.touched)"
+                 class="alert alert-danger">
+
+                <div *ngIf="uname.errors.required">
+                  UserName is required.
+                </div>
+          </div>
+
+          <div *ngIf="uname.valid">
+            {{checkUsername}}
+          </div>
+
+        </div>
+  
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email"
+          required email
+          [(ngModel)]="model.email" name="email" #email="ngModel">
+          
+          <div *ngIf="email.invalid && email.touched"
+                 class="alert alert-danger">
+
+                <div *ngIf="email.errors.required">
+                  Email is required.
+                </div>
+
+                <div *ngIf="email.errors.email">
+                  Invalid Email Format
+                </div>
+          </div>
+
+        </div>
+  
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <input type="text" class="form-control" id="phoneNumber"
+          [(ngModel)]="model.phoneNumber" name="phoneNumber" #phoneNumber="ngModel">
+         
+        </div>
+  
+        <div class="form-group">
+          <label for="role">Role</label>
+          <select class="form-control" id="role"
+                  required
+                  [(ngModel)]="model.role" name="role"
+                  #role="ngModel"
+                  placeholder="d.ff">
+    				<option hidden value="" disabled selected>Select one Category </option>>
+            <option *ngFor="let role of userRoles" [value]="role">{{role}}</option>
+          </select>
+          
+          <div *ngIf="role.invalid && role.touched"
+          class="alert alert-danger">
+
+         <div *ngIf="uname.errors.required">
+           Role is required.
+         </div>
+          </div>
+
+        </div>
+  
+        <button type="submit" class="btn btn-success"  [disabled]="!userForm.form.valid">Submit</button>
+        <button type="button" class="btn btn-default" (click)="clearForm(); userForm.reset()">Clear</button>
+
+        <div *ngIf = "!submitted" class="alert alert-danger">
+          {{submissionMessage}}
+        </div>
+    </form>
+</div>
+  
+       

@@ -39,3 +39,19 @@
   .c-form{
     padding: 20px;
 }
+
+.main-div mat-card{
+  padding:0px;
+}
+
+#logout-button {
+  color: white;
+  background-color: #16163f;
+  border: 1px solid black;
+}
+
+#delete-product-button {
+  color: white;
+  background-color: #145214;
+  border: 1px solid black;
+}

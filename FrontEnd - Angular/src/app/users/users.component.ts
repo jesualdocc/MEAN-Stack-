@@ -1,6 +1,7 @@
+import { AddUserComponent } from './../modals/add-user/add-user.component';
 import { baseUrl } from './../../environments/environment';
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { Users } from './Users';
 import { Router } from '@angular/router';
 import { UsersService } from './users.service';
@@ -24,6 +25,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 })
 export class UsersComponent implements OnInit {
 
+  
   formGroupAdd:FormGroup | undefined;
   dataSource:any|undefined;
   user:Users[];
@@ -35,7 +37,8 @@ export class UsersComponent implements OnInit {
   expandedElement: any;
 
 
-  constructor(private userService:UsersService, private router: Router, private modalService: NgbModal) { 
+  constructor(private userService:UsersService, private router: Router, private modalService: NgbModal,
+    public matDialog: MatDialog) { 
     this.user = new Array();
   }
 
@@ -48,16 +51,15 @@ export class UsersComponent implements OnInit {
     //console.log(this.expandedElement);
   }
 
-  addUser(){
-    this.formGroupAdd = new FormGroup({
-      userName: new FormControl("", [Validators.required]),
-      password: new FormControl("", [Validators.required]),
-      firstName: new FormControl("", [Validators.required]),
-      lastName: new FormControl("", [Validators.required]),
-      email: new FormControl("", [Validators.required]),
-      role: new FormControl("", [Validators.required]),
-      phoneNumber: new FormControl("", [Validators.required])
-    })
+  openAddUserModal() {
+    const dialogConfig = new MatDialogConfig();
+    // The user can't close the dialog by clicking outside its body
+    dialogConfig.disableClose = true;
+    dialogConfig.id = "modal-component";
+    dialogConfig.height = "500px";
+    dialogConfig.width = "400px";
+    // https://material.angular.io/components/dialog/overview
+    const modalDialog = this.matDialog.open(AddUserComponent, dialogConfig);
   }
 
   openAddModal(){
@@ -97,7 +99,8 @@ export class UsersComponent implements OnInit {
 }
 
 @Component({
-  templateUrl: './modals/main.html'
+  templateUrl: './modals/main.html',
+  styleUrls: ['./users.component.css']
 })
 export class Main_Modal {
   @Input() rowID:any;
@@ -126,7 +129,8 @@ export class Main_Modal {
 }
 
 @Component({
-  templateUrl: './modals/editmodal.html'
+  templateUrl: './modals/editmodal.html',
+  styleUrls: ['./users.component.css'],
 })
 export class Edit_Modal {
   constructor(public activeModal: NgbActiveModal) {}
@@ -134,7 +138,8 @@ export class Edit_Modal {
 
 
 @Component({
-  templateUrl: './modals/confirmation.html'
+  templateUrl: './modals/confirmation.html',
+  styleUrls: ['./users.component.css'],
 })
 export class Confirmation_Modal {
   @Input() rowID:any;
@@ -177,10 +182,10 @@ export class Confirmation_Modal {
   
 }
 
-@Component({
-  templateUrl: './modals/adduser.html'
-})
-export class AddUser_Modal {
-  constructor(public activeModal: NgbActiveModal) {}
+// @Component({
+//   styleUrls: ['./users.component.css'],
+// })
+// export class AddUser_Modal {
+//   constructor(public activeModal: NgbActiveModal) {}
 
-}
+// }

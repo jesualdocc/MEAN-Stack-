@@ -24,17 +24,15 @@ export class LoginComponent implements OnInit {
   
   initForm(){
     this.formGroup = new FormGroup({
-      userName: new FormControl("", [Validators.required]),
-      password: new FormControl("", [Validators.required])
+      userName: new FormControl("", [Validators.required, Validators.minLength(5)]),
+      password: new FormControl("", [Validators.required, Validators.minLength(6)])
     })
   }
 
   loginProcess(){
     if(this.formGroup?.valid){
       this.loginService.loginHandler(this.formGroup.value).subscribe(result=>{
-
-       console.log(result);
-
+        
         if(result.isValid){
           userName= result.userName;
           userRole = result.role;

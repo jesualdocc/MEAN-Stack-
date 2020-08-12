@@ -35,7 +35,7 @@ export class UsersService {
     var url = baseUrl + '/Users/NewUser';
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    return this.http.put(url, data,{responseType: 'json'});
+    return this.http.post(url, data,{responseType: 'json'});
   }
 
   deleteUser(id:string){

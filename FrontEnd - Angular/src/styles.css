@@ -21,3 +21,5 @@ table tr.highlight {
     background-color: #4CAF50 !important;
     color: #1549da;
 }
+
+@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
